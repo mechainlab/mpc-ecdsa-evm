@@ -89,6 +89,7 @@ where
     let retry_delay = time::Duration::from_millis(250);
     for _i in 1..retries {
         let client1 = reqwest::blocking::Client::new();
+        //async
         let res = client1
             .post(&format!("{}/{}", addr, path))
             .json(&body)
