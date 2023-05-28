@@ -89,6 +89,7 @@ async fn main() -> Result<()> {
     let signature = signing
         .complete(&partial_signatures)
         .context("online stage failed")?;
+    // to be parse
     let signature = serde_json::to_string(&signature).context("serialize signature")?;
     println!("{}", signature);
 

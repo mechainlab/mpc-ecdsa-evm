@@ -107,29 +107,6 @@ impl SmClient {
         }))
     }
 
-    pub async fn subscribe1(&self) -> Result<impl Stream<Item = Result<String>>> {
-        let response = self
-            .http_client
-            .get("subscribe")
-            .await
-            .map_err(|e| e.into_inner())?;
-        let events = async_sse::decode(response);
-
-        //todo
-        Ok(events.filter_map(|msg| async {
-            match msg {
-                Ok(async_sse::Event::Message(msg)) => Some(
-                    String::from_utf8(msg.into_bytes())
-                        .context("SSE message is not valid UTF-8 string"),
-                ),
-                Ok(_) => {
-                    // ignore other types of events
-                    None
-                }
-                Err(e) => Some(Err(e.into_inner())),
-            }
-        }))
-    }
 }
 
 

@@ -120,6 +120,20 @@ pub fn broadcast(
     serde_json::from_str(&res_body).unwrap()
 }
 
+pub fn broadcast_test(
+    client: &Client,
+    party_num: u16,
+    round: &str,
+    data: String,
+    sender_uuid: String,
+) -> Result<(), ()> {
+    let key = format!("{}-{}-{}", party_num, round, sender_uuid);
+    let entry = Entry { key, value: data };
+
+    let res_body = postb(client, "set", entry).unwrap();
+    serde_json::from_str(&res_body).unwrap()
+}
+
 pub fn sendp2p(
     client: &Client,
     party_from: u16,

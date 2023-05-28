@@ -20,21 +20,6 @@ const main = async () => {
   const rpcUrl = "http://localhost:8545";
   const provider = ethers.getDefaultProvider(rpcUrl);
 
-  const tinyValueToSend = 10*10**18;
-  const txData = {
-    type: 2,
-    chainId: 53077,
-    nonce: await provider.getTransactionCount(getAddress()),
-    maxPriorityFeePerGas: "0xf1013241",
-    maxFeePerGas: "0xf1013241",
-    gasLimit: "0x0927c0",
-    to: "0xA28B81e10d78a38A9C1D4dD599145355577354f6",
-    value: "0x" + tinyValueToSend.toString(16),
-  };
-
-  const serializedTx = ethers.utils.serializeTransaction(txData);
-  const resolvedTx = await resolveProperties(txData);
-
   const signature = await axios.post(
     "http://localhost:8001/send-tx",
     keccak256(serializedTx).slice(2),
