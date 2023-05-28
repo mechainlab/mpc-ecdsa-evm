@@ -17,6 +17,7 @@ async fn send_tx(serialized_tx: &str) -> String {
 
     let sign_task = task::spawn(gg20_signing::sign(
         serialized_tx.to_string(),
+        // PathBuf::from(r"./local-share1.json"),
         PathBuf::from(r"./examples/local-share1.json"),
         vec![1, 2],
         surf::Url::parse("http://localhost:8000").unwrap(),
@@ -52,6 +53,8 @@ async fn send_tx(serialized_tx: &str) -> String {
         },
         Err(error) => format!("error in sign {:?}", error),
     };
+
+    println!("signature: {}", signature);
 
     signature
 }
